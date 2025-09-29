@@ -1,0 +1,247 @@
+.projects-section {
+  padding: 4rem 1rem;
+  background-color: #f9fafb;
+}
+
+.dark .projects-section {
+  background-color: #111827;
+}
+
+@media (min-width: 640px) {
+  .projects-section {
+    padding: 4rem 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .projects-section {
+    padding: 4rem 2rem;
+  }
+}
+
+.projects-container {
+  margin: 0 auto;
+  max-width: 80rem;
+}
+
+.projects-title {
+  font-size: 1.875rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+@media (min-width: 640px) {
+  .projects-title {
+    font-size: 2.25rem;
+  }
+}
+
+.projects-intro {
+  max-width: 56rem;
+  margin: 0 auto 3rem auto;
+}
+
+.projects-description {
+  text-align: center;
+  color: #6b7280;
+  margin-bottom: 2rem;
+  font-size: 1.125rem;
+  line-height: 1.6;
+}
+
+.dark .projects-description {
+  color: #9ca3af;
+}
+
+.knowledge-areas {
+  display: grid;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+@media (min-width: 768px) {
+  .knowledge-areas {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.knowledge-category {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.dark .knowledge-category {
+  background: rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.knowledge-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #1f2937;
+}
+
+.dark .knowledge-title {
+  color: #f9fafb;
+}
+
+.knowledge-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.knowledge-tag {
+  padding: 0.25rem 0.75rem;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: white;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-radius: 1rem;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.knowledge-tag:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+.projects-subtitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #1f2937;
+}
+
+.dark .projects-subtitle {
+  color: #f9fafb;
+}
+
+.projects-grid {
+  display: grid;
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .projects-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .projects-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.project-card {
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 1rem;
+  overflow: hidden;
+  transition: transform 0.3s ease-in-out;
+}
+
+.project-card:hover {
+  transform: scale(1.05);
+}
+
+.dark .project-card {
+  background: rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.project-image {
+  width: 100%;
+  height: 12rem;
+  object-fit: cover;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.project-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.project-description {
+  color: #4b5563;
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.dark .project-description {
+  color: #d1d5db;
+}
+
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.project-tag {
+  padding: 0.25rem 0.5rem;
+  background-color: #dbeafe;
+  color: #1e40af;
+  font-size: 0.875rem;
+  border-radius: 0.25rem;
+}
+
+.dark .project-tag {
+  background-color: #1e3a8a;
+  color: #bfdbfe;
+}
+
+.project-links {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.project-link {
+  color: #2563eb;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.project-link:hover {
+  color: #1d4ed8;
+}
+
+.project-link.github {
+  color: #4b5563;
+}
+
+.project-link.github:hover {
+  color: #1f2937;
+}
+
+.dark .project-link {
+  color: #60a5fa;
+}
+
+.dark .project-link:hover {
+  color: #bfdbfe;
+}
+
+.dark .project-link.github {
+  color: #9ca3af;
+}
+
+.dark .project-link.github:hover {
+  color: #e5e7eb;
+}
