@@ -25,6 +25,11 @@
   letter-spacing: -0.025em;
   text-align: center;
   margin-bottom: 2rem;
+  color: #1f2937;
+}
+
+.dark .about-title {
+  color: #f9fafb;
 }
 
 @media (min-width: 640px) {
