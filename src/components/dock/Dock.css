@@ -1,24 +1,27 @@
 .dock-container {
   position: fixed;
   bottom: 1rem;
-  left: 50%;
+  left: 20%;
   transform: translateX(-50%);
   z-index: 40;
   display: flex;
   align-items: center;
   justify-content: center;
   width: fit-content;
+  max-width: calc(100vw - 1rem);
   border-radius: 1rem;
   padding: 0.375rem;
   backdrop-filter: blur(12px);
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.2);
+  box-sizing: border-box;
 }
 
 .dock-items {
   display: flex;
   align-items: center;
   gap: 0.375rem;
+  justify-content: center;
 }
 
 .dock-item {
@@ -31,6 +34,12 @@
   font-size: 1.125rem;
   cursor: pointer;
   user-select: none;
+  /* Ensure proper touch targets for accessibility */
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .dock-item:hover {
@@ -52,18 +61,134 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Responsive adjustments */
+/* Mobile-first responsive adjustments */
+@media (max-width: 374px) {
+  .dock-container {
+    bottom: max(0.5rem, env(safe-area-inset-bottom, 0.5rem));
+    left: 20%;
+    transform: translateX(-50%);
+    width: auto;
+    max-width: calc(100vw - 1rem);
+    padding: 0.25rem;
+  }
+
+  .dock-items {
+    gap: 0.2rem;
+    justify-content: center;
+    flex-wrap: nowrap;
+    width: 100%;
+  }
+
+  .dock-item {
+    padding: 0.4rem;
+    font-size: 0.9rem;
+    min-width: 2.2rem;
+    height: 2.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    max-width: 2.8rem;
+  }
+}
+
+@media (min-width: 375px) and (max-width: 413px) {
+  .dock-container {
+    bottom: max(0.75rem, env(safe-area-inset-bottom, 0.75rem));
+    padding: 0.3rem;
+    max-width: calc(100vw - 1.5rem);
+    left: 20%;
+    transform: translateX(-50%);
+  }
+
+  .dock-items {
+    gap: 0.25rem;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .dock-item {
+    padding: 0.45rem;
+    font-size: 0.95rem;
+    min-width: 2.5rem;
+    height: 2.5rem;
+    flex: 1;
+    max-width: 3rem;
+  }
+}
+
+/* iPhone 14 Pro Max and similar large phones */
+@media (min-width: 414px) and (max-width: 430px) {
+  .dock-container {
+    bottom: max(0.75rem, env(safe-area-inset-bottom, 0.75rem));
+    padding: 0.3rem;
+    max-width: calc(100vw - 1rem);
+    left: 20%;
+    transform: translateX(-50%);
+    width: auto;
+  }
+
+  .dock-items {
+    gap: 0.25rem;
+    justify-content: space-evenly;
+    width: 100%;
+    flex-wrap: nowrap;
+  }
+
+  .dock-item {
+    padding: 0.45rem;
+    font-size: 1rem;
+    width: calc(20% - 0.2rem);
+    min-width: 3rem;
+    max-width: 3.5rem;
+    height: 3rem;
+    flex: 0 0 auto;
+  }
+}
+
+@media (min-width: 431px) and (max-width: 639px) {
+  .dock-container {
+    bottom: max(0.75rem, env(safe-area-inset-bottom, 0.75rem));
+    padding: 0.375rem;
+    max-width: calc(100vw - 1.5rem);
+    left: 25%;
+    transform: translateX(-50%);
+  }
+
+  .dock-items {
+    gap: 0.3rem;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .dock-item {
+    padding: 0.5rem;
+    font-size: 1rem;
+    min-width: 2.75rem;
+    height: 2.75rem;
+    flex: 1;
+    max-width: 4rem;
+  }
+}
+
 @media (min-width: 640px) {
   .dock-container {
     padding: 0.5rem;
+    left: 30%;
+    transform: translateX(-50%);
+    width: fit-content;
   }
 
   .dock-items {
     gap: 0.5rem;
+    width: auto;
   }
 
   .dock-item {
     padding: 0.75rem;
     font-size: 1.25rem;
+    flex: none;
+    min-width: 44px;
+    max-width: none;
   }
 }
