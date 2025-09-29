@@ -1,0 +1,132 @@
+.hero-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5rem 1rem 0;
+}
+
+.hero-container {
+  margin: 0 auto;
+  max-width: 80rem;
+}
+
+.hero-grid {
+  display: grid;
+  gap: 3rem;
+  align-items: center;
+}
+
+@media (min-width: 1024px) {
+  .hero-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.hero-content {
+
+}
+
+.hero-title {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  line-height: 1.1;
+}
+
+@media (min-width: 768px) {
+  .hero-title {
+    font-size: 4.5rem;
+  }
+}
+
+.hero-name {
+  background: linear-gradient(to right, #2563eb, #7c3aed);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.hero-subtitle-container {
+  font-size: 1.25rem;
+  color: #4b5563;
+  margin-bottom: 2rem;
+}
+
+.dark .hero-subtitle-container {
+  color: #9ca3af;
+}
+
+@media (min-width: 768px) {
+  .hero-subtitle-container {
+    font-size: 1.5rem;
+  }
+}
+
+.hero-subtitle-animation {
+  overflow: hidden;
+}
+
+.hero-subtitle-text {
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.hero-description {
+  font-size: 1.125rem;
+  color: #6b7280;
+  margin-bottom: 2rem;
+  max-width: 32rem;
+  line-height: 1.7;
+}
+
+.dark .hero-description {
+  color: #9ca3af;
+}
+
+.hero-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .hero-actions {
+    flex-direction: row;
+  }
+}
+
+.hero-scroll-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 4rem;
+  color: #6b7280;
+  font-size: 0.875rem;
+}
+
+.dark .hero-scroll-indicator {
+  color: #9ca3af;
+}
+
+.hero-scroll-icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+.hero-visual {
+  height: 24rem;
+}
+
+@media (min-width: 768px) {
+  .hero-visual {
+    height: 31.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero-visual {
+    height: 37.5rem;
+  }
+}
