@@ -32,6 +32,11 @@
   font-weight: 700;
   margin-bottom: 1.5rem;
   line-height: 1.1;
+  color: #1f2937;
+}
+
+.dark .hero-title {
+  color: #f9fafb;
 }
 
 @media (min-width: 768px) {

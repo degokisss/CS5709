@@ -30,6 +30,11 @@
   letter-spacing: -0.025em;
   text-align: center;
   margin-bottom: 3rem;
+  color: #1f2937;
+}
+
+.dark .projects-title {
+  color: #f9fafb;
 }
 
 @media (min-width: 640px) {
@@ -175,6 +180,11 @@
   font-size: 1.25rem;
   font-weight: 600;
   margin-bottom: 0.5rem;
+  color: #1f2937;
+}
+
+.dark .project-title {
+  color: #f9fafb;
 }
 
 .project-description {

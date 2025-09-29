@@ -30,6 +30,11 @@
   letter-spacing: -0.025em;
   text-align: center;
   margin-bottom: 3rem;
+  color: #1f2937;
+}
+
+.dark .education-title {
+  color: #f9fafb;
 }
 
 @media (min-width: 640px) {
