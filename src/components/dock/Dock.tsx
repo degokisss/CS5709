@@ -54,6 +54,15 @@ export default function Dock({ children }: DockProps) {
       >
         📸
       </motion.button>
+      <motion.button
+        className="dock-item"
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.95 }}
+        onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+        title="Contact"
+      >
+        📧
+      </motion.button>
     </>
   );
 
