@@ -7,6 +7,7 @@ export const projects: Project[] = [
         description: "Enhanced system performance by 20% through optimization of RESTful APIs for workforce analytics, scheduling, and time management solutions for hospitals in Singapore. Built with microservices architecture using Spring Boot and Spring Batch.",
         image: "https://picsum.photos/400/300?random=1",
         tags: ["Java", "Spring Boot", "Spring Batch", "RESTful API", "Microservices", "GitLab CI/CD"],
+        liveUrl: "https://wfoqam.workforceoptimizer.com/app",
         featured: true,
     },
     {
@@ -15,6 +16,7 @@ export const projects: Project[] = [
         description: "Led development and optimization of backend APIs using Spring Boot for ViNang's e-commerce platform focused on bathroom product sales. Integrated Redis caching and optimized database queries, improving system performance and response time by 30%.",
         image: "https://picsum.photos/400/300?random=2",
         tags: ["Java", "Spring Boot", "Redis", "SQL", "React", "CI/CD"],
+        liveUrl: "https://vinang.vn/",
         featured: true,
     },
     {
@@ -23,6 +25,7 @@ export const projects: Project[] = [
         description: "Implemented secure transactions using Apache POI and SOAP for Eximbank payment systems. Developed banking APIs ensuring secure financial transactions with robust security measures.",
         image: "https://picsum.photos/400/300?random=3",
         tags: ["Java", "Apache POI", "SOAP", "Banking APIs", "Security"],
+        liveUrl: "https://edigi.eximbank.com.vn/",
         featured: true,
     },
     {
@@ -42,9 +45,9 @@ export const projects: Project[] = [
     {
         id: 6,
         title: "Portfolio Website",
-        description: "This portfolio website built with React, TypeScript, Three.js, and Framer Motion. Features 3D animations, responsive design, and modern UI/UX principles.",
+        description: "This portfolio website built with React, TypeScript, and Framer Motion. Features responsive design, and modern UI/UX principles.",
         image: "https://picsum.photos/400/300?random=6",
-        tags: ["React", "TypeScript", "Three.js", "Framer Motion", "Tailwind"],
-        githubUrl: "https://github.com/example",
+        tags: ["React", "TypeScript", "Framer Motion", "Tailwind"],
+        githubUrl: "https://github.com/degokisss/CS5709",
     }
     ];
