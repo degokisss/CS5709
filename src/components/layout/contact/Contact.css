@@ -1,6 +1,7 @@
 .contact-section {
-  padding: 4rem 1rem;
+  padding: 4rem 1rem 8rem;
   color: #1f2937;
+  scroll-margin-top: 100px;
 }
 
 .dark .contact-section {

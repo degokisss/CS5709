@@ -7,7 +7,7 @@ export default function About() {
         <h2 className="about-title">About Me</h2>
         <div className="about-content">
           <p className="about-paragraph">
-            I'm an experienced Java Developer with over 5 years of hands-on experience designing and implementing
+            I'm an experienced Java Developer with over 6 years of hands-on experience designing and implementing
             robust APIs. Currently based in Limerick, Ireland, I specialize in backend development with expertise
             in Spring Boot, microservices architecture, and database optimization.
           </p>
