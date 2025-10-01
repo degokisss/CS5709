@@ -17,40 +17,66 @@ const navItems: NavItem[] = [
     { label: 'Education', href: '#education', id: 'education' },
     { label: 'Projects', href: '#projects', id: 'projects' },
     { label: 'Gallery', href: '#gallery', id: 'gallery' },
+    { label: 'Contact', href: '#contact', id: 'contact' },
 ];
 
 const Navigation: React.FC = () => {
     const [scrolled, setScrolled] = useState(false);
     const [activeSection, setActiveSection] = useState('home');
+    const [isScrolling, setIsScrolling] = useState(false);
+    const scrollTimeoutRef = React.useRef<number | null>(null);
     const { theme, toggleTheme } = useTheme();
 
     useEffect(() => {
         const handleScroll = () => {
             setScrolled(window.scrollY > 50);
 
-            // Update active section based on scroll position
+            // Don't update an active section if the user just clicked a nav item
+            if (isScrolling)
+                return;
+
+            // Check if we're at the bottom of the page
+            const isAtBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 10;
+            if (isAtBottom) {
+                setActiveSection('contact');
+                return;
+            }
+
+            // Update the active section based on scroll position
             const sections = navItems.map(item => item.id);
             const current = sections.find(section => {
                 const element = document.getElementById(section);
-                if (element) {
-                    const rect = element.getBoundingClientRect();
-                    return rect.top <= 100 && rect.bottom >= 100;
-                }
-                return false;
+                if (!element)
+                    return false;
+
+                const rect = element.getBoundingClientRect();
+                return rect.top <= 100 && rect.bottom >= 100;
             });
 
-            if (current) setActiveSection(current);
+            if (current)
+                setActiveSection(current);
         };
 
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
+    }, [isScrolling]);
 
     const scrollToSection = (id: string) => {
+        setActiveSection(id);
+        setIsScrolling(true);
+
+        // Clear any existing timeout
+        if (scrollTimeoutRef.current)
+            clearTimeout(scrollTimeoutRef.current);
+
         const element = document.getElementById(id);
-        if (element) {
+        if (element)
             element.scrollIntoView({ behavior: 'smooth' });
-        }
+
+        // Re-enable scroll detection after animation completes
+        scrollTimeoutRef.current = setTimeout(() => {
+            setIsScrolling(false);
+        }, 1000);
     };
 
     return (
