@@ -9,6 +9,32 @@ export interface Project {
     featured?: boolean;
 }
 
+export interface GalleryImage {
+    id: number;
+    src: string;
+    title: string;
+    description: string;
+    category: string;
+}
+
+export interface GalleryCategory {
+    id: string;
+    label: string;
+}
+
+export interface Skill {
+    id: number;
+    name: string;
+    level: 'Beginner' | 'Intermediate' | 'Advanced' | 'Expert';
+    category: string;
+    yearsOfExperience?: number;
+}
+
+export interface SkillCategory {
+    id: string;
+    label: string;
+}
+
 export interface DockItem {
     icon: React.ComponentType<{ className?: string }>;
     label: string;
