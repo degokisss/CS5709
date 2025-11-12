@@ -1,6 +1,12 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
+import emailjs from '@emailjs/browser'
 import Button from '../../ui/button/Button'
 import './Contact.css'
+
+// EmailJS Configuration
+const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID || 'YOUR_SERVICE_ID'
+const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'YOUR_TEMPLATE_ID'
+const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'YOUR_PUBLIC_KEY'
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -8,11 +14,51 @@ export default function Contact() {
     email: '',
     message: ''
   })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState<{
+    type: 'success' | 'error' | null
+    message: string
+  }>({ type: null, message: '' })
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    //TODO: Handle form submission here
-    console.log('Form submitted:', formData)
+    setIsSubmitting(true)
+    setSubmitStatus({ type: null, message: '' })
+
+    try {
+      // Send email using EmailJS
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        {
+          from_name: formData.name,
+          from_email: formData.email,
+          message: formData.message,
+          to_name: 'Tan Le',
+        },
+        EMAILJS_PUBLIC_KEY
+      )
+
+      setSubmitStatus({
+        type: 'success',
+        message: 'Thank you! Your message has been sent successfully.'
+      })
+
+      // Reset form
+      setFormData({
+        name: '',
+        email: '',
+        message: ''
+      })
+    } catch (error) {
+      console.error('EmailJS Error:', error)
+      setSubmitStatus({
+        type: 'error',
+        message: 'Oops! Something went wrong. Please try again or email me directly.'
+      })
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -68,6 +114,16 @@ export default function Contact() {
           {/* Contact Form */}
           <div className="contact-form">
             <form onSubmit={handleSubmit} className="form-fields">
+              {/* Status Message */}
+              {submitStatus.type && (
+                <div
+                  className={`form-status ${submitStatus.type === 'success' ? 'form-status-success' : 'form-status-error'}`}
+                  role="alert"
+                >
+                  {submitStatus.message}
+                </div>
+              )}
+
               <div className="form-field">
                 <label htmlFor="name" className="form-label">
                   Name
@@ -79,6 +135,7 @@ export default function Contact() {
                   value={formData.name}
                   onChange={handleChange}
                   className="form-input"
+                  disabled={isSubmitting}
                   required
                 />
               </div>
@@ -93,6 +150,7 @@ export default function Contact() {
                   value={formData.email}
                   onChange={handleChange}
                   className="form-input"
+                  disabled={isSubmitting}
                   required
                 />
               </div>
@@ -107,11 +165,18 @@ export default function Contact() {
                   onChange={handleChange}
                   rows={5}
                   className="form-textarea"
+                  disabled={isSubmitting}
                   required
                 />
               </div>
-              <Button type="submit" variant="primary" size="lg" className="form-submit">
-                Send Message
+              <Button
+                type="submit"
+                variant="primary"
+                size="lg"
+                className="form-submit"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? 'Sending...' : 'Send Message'}
               </Button>
             </form>
           </div>
