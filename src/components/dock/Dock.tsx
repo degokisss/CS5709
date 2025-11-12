@@ -87,6 +87,7 @@ export default function Dock({ children }: DockProps) {
         whileTap={{ scale: 0.95 }}
         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
         title="Home"
+        aria-label="Navigate to Home section"
       >
         🏠
       </motion.button>
@@ -98,6 +99,7 @@ export default function Dock({ children }: DockProps) {
         whileTap={{ scale: 0.95 }}
         onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
         title="About"
+        aria-label="Navigate to About section"
       >
         👨‍💻
       </motion.button>
@@ -109,6 +111,7 @@ export default function Dock({ children }: DockProps) {
         whileTap={{ scale: 0.95 }}
         onClick={() => document.getElementById('education')?.scrollIntoView({ behavior: 'smooth' })}
         title="Education"
+        aria-label="Navigate to Education section"
       >
         🎓
       </motion.button>
@@ -120,6 +123,7 @@ export default function Dock({ children }: DockProps) {
         whileTap={{ scale: 0.95 }}
         onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
         title="Projects"
+        aria-label="Navigate to Projects section"
       >
         💼
       </motion.button>
@@ -131,6 +135,7 @@ export default function Dock({ children }: DockProps) {
         whileTap={{ scale: 0.95 }}
         onClick={() => document.getElementById('gallery')?.scrollIntoView({ behavior: 'smooth' })}
         title="Gallery"
+        aria-label="Navigate to Gallery section"
       >
         📸
       </motion.button>
@@ -142,6 +147,7 @@ export default function Dock({ children }: DockProps) {
         whileTap={{ scale: 0.95 }}
         onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
         title="Contact"
+        aria-label="Navigate to Contact section"
       >
         📧
       </motion.button>

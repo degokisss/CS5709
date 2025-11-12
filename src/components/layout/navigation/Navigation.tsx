@@ -93,6 +93,7 @@ const Navigation: React.FC = () => {
                         onClick={() => scrollToSection('home')}
                         className="text-lg sm:text-xl font-bold gradient-text cursor-pointer"
                         whileHover={{ scale: 1.05 }}
+                        aria-label="Navigate to Home section"
                     >
                         <span className="hidden sm:inline">Le Nguyen Thanh Tan</span>
                         <span className="sm:hidden">LNTT</span>
@@ -105,11 +106,13 @@ const Navigation: React.FC = () => {
                                 key={item.id}
                                 onClick={() => scrollToSection(item.id)}
                                 className={clsx(
-                                    "text-xs sm:text-sm md:text-base text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors relative px-1 sm:px-2 py-1",
+                                    "text-xs sm:text-sm md:text-base text-gray-800 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors relative px-1 sm:px-2 py-1",
                                     activeSection === item.id && "text-blue-600 dark:text-blue-400"
                                 )}
                                 whileHover={{ scale: 1.1 }}
                                 whileTap={{ scale: 0.95 }}
+                                aria-label={`Navigate to ${item.label} section`}
+                                aria-current={activeSection === item.id ? 'page' : undefined}
                             >
                                 {item.label}
                                 {activeSection === item.id && (
@@ -131,6 +134,7 @@ const Navigation: React.FC = () => {
                             className="p-1.5 sm:p-2 rounded-full ml-2"
                             whileHover={{ scale: 1.1 }}
                             whileTap={{ scale: 0.9 }}
+                            aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
                         >
                             {theme === 'dark' ? (
                                 <SunIcon className="w-4 h-4 sm:w-5 sm:h-5" />
