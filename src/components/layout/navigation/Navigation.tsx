@@ -8,7 +8,7 @@
  * Features:
  * - Fixed position at top of viewport
  * - Glass morphism effect when scrolled
- * - Active section detection via scroll position
+ * - Active section detection via scroll position (using useScrollSpy hook)
  * - Smooth scroll to sections on click
  * - Prevents active section flicker during programmatic scrolling
  * - Theme toggle button (light/dark mode)
@@ -16,19 +16,14 @@
  * - Animated underline for active section
  * - Slide-down entrance animation
  *
- * Scroll Detection Algorithm:
- * 1. Checks if user is at bottom of page → sets 'contact' as active
- * 2. Otherwise, finds section whose top is above viewport top (≤100px) and
- *    bottom is below viewport top (≥100px)
- * 3. Temporarily disables detection during programmatic scrolling (1s timeout)
- *
  * @module components/layout/navigation
  */
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { SunIcon, MoonIcon } from '@heroicons/react/24/outline';
 import { useTheme } from '../../../hooks/useTheme';
+import { useScrollSpy } from '../../../hooks/useScrollSpy';
 import Button from '../../ui/button/Button';
 import { clsx } from 'clsx';
 
@@ -63,161 +58,23 @@ const navItems: NavItem[] = [
  * Navigation Component
  *
  * Main navigation bar for the portfolio with intelligent scroll tracking.
+ * Uses the useScrollSpy hook for scroll detection and active section tracking.
  *
  * @returns Navigation bar with active section highlighting and theme toggle
  */
 const Navigation: React.FC = () => {
-    /**
-     * State: Whether user has scrolled past threshold (50px)
-     * Controls glass morphism effect appearance
-     */
-    const [scrolled, setScrolled] = useState(false);
-
-    /**
-     * State: Currently active section ID
-     * Updated by scroll detection or user click
-     * @default 'home'
-     */
-    const [activeSection, setActiveSection] = useState('home');
-
-    /**
-     * State: Whether a programmatic scroll is in progress
-     * Used to prevent active section flickering during smooth scroll
-     * When true, scroll detection is temporarily disabled
-     */
-    const [isScrolling, setIsScrolling] = useState(false);
-
-    /**
-     * Ref: Timeout ID for re-enabling scroll detection
-     * Stored in ref to persist across renders and allow cancellation
-     */
-    const scrollTimeoutRef = React.useRef<number | null>(null);
-
     // Access theme context for dark mode toggle
     const { theme, toggleTheme } = useTheme();
 
-    /**
-     * Effect: Scroll event listener for active section detection
-     *
-     * This effect handles two main responsibilities:
-     * 1. Apply glass morphism effect when scrolled past 50px
-     * 2. Detect which section is currently in view
-     *
-     * The scroll detection logic is complex to handle edge cases:
-     * - Prevents flickering during programmatic scrolling (nav clicks)
-     * - Handles bottom of page (always activates 'contact')
-     * - Uses viewport position to determine visible section
-     */
-    useEffect(() => {
-        const handleScroll = () => {
-            // Update scrolled state for visual effects
-            // 50px threshold prevents effect from appearing too early
-            setScrolled(window.scrollY > 50);
-
-            // IMPORTANT: Don't update active section if user just clicked a nav item
-            // This prevents the active indicator from flickering during smooth scroll
-            // The isScrolling flag is set when user clicks and cleared after 1 second
-            if (isScrolling)
-                return;
-
-            /**
-             * Edge Case: Bottom of Page Detection
-             *
-             * When user reaches the bottom, the last section (contact) might not
-             * technically be "in view" per the standard detection logic below.
-             * This explicitly sets 'contact' as active when at page bottom.
-             *
-             * Calculation breakdown:
-             * - window.innerHeight: Height of visible viewport
-             * - window.scrollY: Current vertical scroll position
-             * - document.documentElement.scrollHeight: Total page height
-             * - Subtracting 10px adds small tolerance for rounding errors
-             */
-            const isAtBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 10;
-            if (isAtBottom) {
-                setActiveSection('contact');
-                return;
-            }
-
-            /**
-             * Standard Scroll Detection Algorithm
-             *
-             * Determines active section based on scroll position.
-             * A section is considered "active" when its content overlaps
-             * with a detection zone 100px from the top of the viewport.
-             *
-             * This 100px offset accounts for the fixed navigation bar height.
-             */
-            const sections = navItems.map(item => item.id);
-
-            // Find the first section that intersects with our detection zone
-            const current = sections.find(section => {
-                const element = document.getElementById(section);
-                if (!element)
-                    return false;
-                const rect = element.getBoundingClientRect();
-                return rect.top <= 100 && rect.bottom >= 100;
-            });
-
-            // Update active section if a match was found
-            if (current)
-                setActiveSection(current);
-        };
-
-        // Register scroll listener
-        window.addEventListener('scroll', handleScroll);
-
-        // Cleanup: Remove listener when component unmounts
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, [isScrolling]); // Re-run effect when isScrolling changes
-
-    /**
-     * Scroll to Section Handler
-     *
-     * Handles navigation item clicks. Performs smooth scroll to target
-     * section and temporarily disables automatic active section detection
-     * to prevent flickering during the animation.
-     *
-     * Flow:
-     * 1. Immediately set active section (for instant visual feedback)
-     * 2. Set isScrolling flag (disables auto-detection)
-     * 3. Perform smooth scroll
-     * 4. After 1 second, clear isScrolling flag (re-enable auto-detection)
-     *
-     * @param id - Section ID to scroll to
-     */
-    const scrollToSection = (id: string) => {
-        // Immediately update active section for instant visual feedback
-        setActiveSection(id);
-
-        // Flag that we're programmatically scrolling
-        // This tells the scroll listener to ignore scroll events temporarily
-        setIsScrolling(true);
-
-        // Clear any existing timeout from previous clicks
-        // This prevents race conditions if user clicks multiple items quickly
-        if (scrollTimeoutRef.current)
-            clearTimeout(scrollTimeoutRef.current);
-
-        // Find target element and scroll to it smoothly
-        const element = document.getElementById(id);
-        if (element)
-            element.scrollIntoView({ behavior: 'smooth' });
-
-        /**
-         * Re-enable automatic scroll detection after animation completes
-         *
-         * 1000ms timeout accounts for:
-         * - CSS smooth scroll duration (~700-800ms)
-         * - Small buffer to ensure scroll has fully completed
-         *
-         * This prevents the active indicator from jumping around during
-         * the smooth scroll animation, which would look glitchy.
-         */
-        scrollTimeoutRef.current = setTimeout(() => {
-            setIsScrolling(false);
-        }, 1000); // 1 second timeout
-    };
+    // Use the scroll spy hook for scroll detection and active section tracking
+    const { scrolled, activeSection, scrollToSection } = useScrollSpy({
+        sectionIds: navItems.map(item => item.id),
+        scrollThreshold: 50,      // Glass morphism effect threshold
+        offsetThreshold: 100,     // Active section detection offset
+        scrollTimeout: 1000,      // Delay before re-enabling scroll detection
+        bottomTolerance: 10,      // Tolerance for bottom-of-page detection
+        initialSection: 'home'    // Initial active section
+    });
 
     return (
         <motion.nav
