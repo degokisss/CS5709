@@ -86,6 +86,8 @@ export default function Gallery() {
               key={category.id}
               className={`gallery-filter ${activeFilter === category.id ? 'active' : ''}`}
               onClick={() => setActiveFilter(category.id)}
+              aria-label={`Filter by ${category.label}`}
+              aria-pressed={activeFilter === category.id}
             >
               {category.label}
             </button>
@@ -95,10 +97,11 @@ export default function Gallery() {
         {/* Gallery Grid */}
         <div className="gallery-grid">
           {filteredImages.map(image => (
-            <div
+            <button
               key={image.id}
               className="gallery-item"
               onClick={() => openModal(image)}
+              aria-label={`View ${image.title} in full size`}
             >
               <img
                 src={image.src}
@@ -109,15 +112,25 @@ export default function Gallery() {
                 <h3 className="gallery-overlay-title">{image.title}</h3>
                 <p className="gallery-overlay-description">{image.description}</p>
               </div>
-            </div>
+            </button>
           ))}
         </div>
 
         {/* Modal */}
-        <div className={`gallery-modal ${selectedImage ? 'active' : ''}`} onClick={closeModal}>
+        <div
+          className={`gallery-modal ${selectedImage ? 'active' : ''}`}
+          onClick={closeModal}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="modal-title"
+        >
           {selectedImage && (
             <div className="gallery-modal-content" onClick={e => e.stopPropagation()}>
-              <button className="gallery-modal-close" onClick={closeModal}>
+              <button
+                className="gallery-modal-close"
+                onClick={closeModal}
+                aria-label="Close image modal"
+              >
                 ×
               </button>
               <img
@@ -126,7 +139,7 @@ export default function Gallery() {
                 className="gallery-modal-image"
               />
               <div className="gallery-modal-info">
-                <h3 className="gallery-modal-title">{selectedImage.title}</h3>
+                <h3 id="modal-title" className="gallery-modal-title">{selectedImage.title}</h3>
                 <p className="gallery-modal-description">{selectedImage.description}</p>
               </div>
             </div>

@@ -63,3 +63,16 @@
     @apply bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent;
   }
 }
+
+@layer utilities {
+  /* Focus indicators for better accessibility */
+  nav button:focus-visible {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+    border-radius: 0.25rem;
+  }
+
+  .dark nav button:focus-visible {
+    outline: 2px solid #60a5fa;
+  }
+}
