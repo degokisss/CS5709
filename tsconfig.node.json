@@ -1,25 +1,116 @@
 {
+  /**
+   * TypeScript Configuration for Node.js Build Scripts
+   *
+   * This configuration applies to build tools and Node.js scripts like
+   * vite.config.ts and tailwind.config.cjs. It uses Node.js-specific
+   * types and targets instead of browser APIs.
+   */
   "compilerOptions": {
+    /**
+     * Cache file location for incremental builds
+     * Separate from app build info to keep concerns isolated
+     */
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
+
+    /**
+     * Target ECMAScript version
+     * ES2023 for latest Node.js LTS features (Array.toSorted, findLast, etc.)
+     */
     "target": "ES2023",
+
+    /**
+     * Type definition libraries to include
+     * Only ES2023 (no DOM) since these scripts run in Node.js, not browser
+     */
     "lib": ["ES2023"],
+
+    /**
+     * Module code generation
+     * ESNext for latest ES module syntax compatible with Node.js
+     */
     "module": "ESNext",
+
+    /**
+     * Skip type checking of declaration files
+     * Speeds up build tool compilation
+     */
     "skipLibCheck": true,
 
-    /* Bundler mode */
+    /* Bundler mode - Optimized for build tools */
+
+    /**
+     * Module resolution for bundler context
+     * Resolves imports the same way Vite and other bundlers do
+     */
     "moduleResolution": "bundler",
+
+    /**
+     * Allow importing .ts extensions explicitly
+     * Useful for config file imports
+     */
     "allowImportingTsExtensions": true,
+
+    /**
+     * Preserve import syntax as written
+     * No automatic type-only import stripping
+     */
     "verbatimModuleSyntax": true,
+
+    /**
+     * Treat all files as modules
+     * Even config files without imports/exports
+     */
     "moduleDetection": "force",
+
+    /**
+     * Don't emit JavaScript
+     * Vite/other tools handle the actual execution
+     */
     "noEmit": true,
 
-    /* Linting */
+    /* Linting - Same strict rules as application code */
+
+    /**
+     * Enable all strict type checking
+     * Ensures config files are type-safe
+     */
     "strict": true,
+
+    /**
+     * Report unused local variables
+     * Keeps config files clean
+     */
     "noUnusedLocals": true,
+
+    /**
+     * Report unused parameters
+     * Maintains code quality in build scripts
+     */
     "noUnusedParameters": true,
+
+    /**
+     * Only erasable syntax allowed
+     * No runtime TypeScript features
+     */
     "erasableSyntaxOnly": true,
+
+    /**
+     * No fallthrough in switch statements
+     * Prevents bugs in config logic
+     */
     "noFallthroughCasesInSwitch": true,
+
+    /**
+     * Explicit types for side-effect imports
+     * Clarity in build script dependencies
+     */
     "noUncheckedSideEffectImports": true
   },
+
+  /**
+   * Files to include in this configuration
+   * Only build tool configuration files, not application code
+   */
   "include": ["vite.config.ts", "tailwind.config.cjs"]
 }

@@ -1,6 +1,32 @@
+/**
+ * Projects Section Component
+ *
+ * Showcases professional projects, technical knowledge areas, and key achievements.
+ * Displays both knowledge categories (technologies/tools) and detailed project cards.
+ *
+ * Features:
+ * - Knowledge areas grouped by category (Core Tech, Frontend, Databases, etc.)
+ * - Project cards with descriptions, tech stacks, and links
+ * - Achievement metrics (performance improvements, deployment stats)
+ * - Responsive grid layout
+ * - External links to project demos/repos
+ *
+ * Data source: src/data/projects.ts
+ *
+ * @module components/layout/projects
+ */
+
 import { projects } from '../../../data/projects'
 import './Projects.css'
 
+/**
+ * Projects Component
+ *
+ * Renders the projects section with knowledge categories and project showcase.
+ * Projects data is imported from a separate data file for easy maintenance.
+ *
+ * @returns Projects section element
+ */
 export default function Projects() {
   return (
     <section id="projects" className="projects-section">

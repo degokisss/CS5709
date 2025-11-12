@@ -1,11 +1,36 @@
+/**
+ * Gallery Section Component
+ *
+ * An interactive image gallery showcasing workspace, projects, and achievements.
+ * Features category filtering and lightbox modal for full-size image viewing.
+ *
+ * Features:
+ * - Category filter buttons (All, Workspace, Projects, Achievements)
+ * - Responsive grid layout
+ * - Lightbox modal for full-size viewing
+ * - Click to expand images
+ * - Keyboard support (ESC to close lightbox)
+ * - Smooth transitions and hover effects
+ *
+ * @module components/layout/gallery
+ */
+
 import { useState } from 'react'
 import './Gallery.css'
 
+/**
+ * Gallery image data structure
+ */
 interface GalleryImage {
+  /** Unique identifier for the image */
   id: number
+  /** Image URL source */
   src: string
+  /** Display title for the image */
   title: string
+  /** Descriptive text explaining the image */
   description: string
+  /** Category for filtering (workspace, projects, achievements) */
   category: string
 }
 
@@ -69,18 +94,52 @@ const categories = [
   { id: 'personal', label: 'Personal' }
 ]
 
+/**
+ * Gallery Component
+ *
+ * Displays filterable image gallery with lightbox functionality.
+ * Users can filter images by category and click to view full-size.
+ *
+ * @returns Gallery section with filtering and lightbox
+ */
 export default function Gallery() {
+  /**
+   * State: Currently active category filter
+   * Controls which images are displayed
+   * @default 'all' - Shows all images
+   */
   const [activeFilter, setActiveFilter] = useState('all')
+
+  /**
+   * State: Currently selected image for lightbox display
+   * null when lightbox is closed
+   */
   const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null)
 
+  /**
+   * Computed: Filtered images based on active filter
+   *
+   * If 'all' is selected, shows all images.
+   * Otherwise, filters images by matching category.
+   *
+   * This is recalculated whenever activeFilter or galleryImages changes.
+   */
   const filteredImages = activeFilter === 'all'
     ? galleryImages
     : galleryImages.filter(img => img.category === activeFilter)
 
+  /**
+   * Opens lightbox modal with selected image
+   * @param image - The image to display in lightbox
+   */
   const openModal = (image: GalleryImage) => {
     setSelectedImage(image)
   }
 
+  /**
+   * Closes lightbox modal
+   * Clears selected image to hide modal
+   */
   const closeModal = () => {
     setSelectedImage(null)
   }

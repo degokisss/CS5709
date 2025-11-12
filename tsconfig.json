@@ -1,4 +1,18 @@
 {
+  /**
+   * Root TypeScript Configuration
+   *
+   * This is the main TypeScript configuration file that uses project references
+   * to split the configuration into separate concerns:
+   * - tsconfig.app.json: Configuration for application source code
+   * - tsconfig.node.json: Configuration for build tools and Node.js scripts
+   *
+   * This approach improves build performance and allows different compiler
+   * options for different parts of the project.
+   *
+   * @see https://www.typescriptlang.org/docs/handbook/project-references.html
+   */
+
   "files": [],
   "references": [
     { "path": "./tsconfig.app.json" },
