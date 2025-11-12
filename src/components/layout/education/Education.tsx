@@ -1,5 +1,29 @@
+/**
+ * Education Section Component
+ *
+ * Displays the developer's academic background including current and past
+ * educational institutions, degrees, and relevant coursework.
+ *
+ * Features:
+ * - Timeline-style layout
+ * - Current and past education entries
+ * - Degree information and GPA
+ * - Study focus areas
+ * - Clean, structured presentation
+ *
+ * @module components/layout/education
+ */
+
 import './Education.css'
 
+/**
+ * Education Component
+ *
+ * Renders the education section with academic credentials.
+ * Content includes Master's and Bachelor's degree information.
+ *
+ * @returns Education section element
+ */
 export default function Education() {
   return (
     <section id="education" className="education-section">

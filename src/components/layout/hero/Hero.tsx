@@ -1,3 +1,20 @@
+/**
+ * Hero Section Component
+ *
+ * The landing/intro section displayed at the top of the portfolio.
+ * Features animated text, visual elements, and call-to-action buttons.
+ *
+ * Features:
+ * - Animated entrance with staggered children
+ * - Gradient text for name/title
+ * - Animated visual decorative element
+ * - Two CTA buttons (View Projects, Get In Touch)
+ * - Smooth scroll to target sections
+ * - Fully responsive layout
+ *
+ * @module components/layout/hero
+ */
+
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowDownIcon } from '@heroicons/react/24/outline';
@@ -6,7 +23,18 @@ import Button from '../../ui/button/Button';
 import { fadeInUp, fadeInLeft, staggerContainer } from '../../../utils/animations';
 import './Hero.css';
 
+/**
+ * Hero Component
+ *
+ * Displays the main hero/landing section with animated introduction,
+ * decorative visual, and navigation buttons.
+ *
+ * @returns Hero section element
+ */
 const Hero: React.FC = () => {
+    /**
+     * Scrolls smoothly to the projects section
+     */
     const scrollToProjects = () => {
         const element = document.getElementById('projects');
         if (element) {
@@ -14,6 +42,9 @@ const Hero: React.FC = () => {
         }
     };
 
+    /**
+     * Scrolls smoothly to the contact section
+     */
     const scrollToContact = () => {
         const element = document.getElementById('contact');
         if (element) {

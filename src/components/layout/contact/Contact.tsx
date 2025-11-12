@@ -1,69 +1,170 @@
+/**
+ * Contact Section Component
+ *
+ * Provides a contact form with EmailJS integration for sending messages directly
+ * to the portfolio owner's email. Displays contact information alongside the form.
+ *
+ * Features:
+ * - Real email delivery via EmailJS service
+ * - Form validation (HTML5 required fields)
+ * - Loading state during submission
+ * - Success/error feedback messages
+ * - Automatic form reset on successful submission
+ * - Input field disabling during submission
+ * - Responsive two-column layout (form + contact info)
+ *
+ * EmailJS Integration:
+ * - Credentials loaded from environment variables (see .env.example)
+ * - Falls back to placeholder values if not configured
+ * - Template variables: from_name, from_email, message, to_name
+ *
+ * @module components/layout/contact
+ */
+
 import React, { useState } from 'react'
 import emailjs from '@emailjs/browser'
 import Button from '../../ui/button/Button'
 import './Contact.css'
 
-// EmailJS Configuration
+/**
+ * EmailJS Configuration
+ *
+ * Credentials are loaded from environment variables set via .env file
+ * or GitHub Secrets during deployment. Falls back to placeholder values
+ * if environment variables are not set (will fail to send emails).
+ *
+ * Required Environment Variables:
+ * - VITE_EMAILJS_SERVICE_ID: EmailJS service identifier
+ * - VITE_EMAILJS_TEMPLATE_ID: EmailJS email template identifier
+ * - VITE_EMAILJS_PUBLIC_KEY: EmailJS public API key
+ *
+ * @see .env.example for setup instructions
+ */
 const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID || 'YOUR_SERVICE_ID'
 const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'YOUR_TEMPLATE_ID'
 const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'YOUR_PUBLIC_KEY'
 
+/**
+ * Contact Component
+ *
+ * Renders the contact section with form and contact information.
+ * Handles form submission via EmailJS for real email delivery.
+ *
+ * @returns Contact section with form and contact info
+ */
 export default function Contact() {
+  /**
+   * State: Form input values
+   * Controlled components - each input's value is tied to this state
+   */
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     message: ''
   })
+
+  /**
+   * State: Whether form is currently being submitted
+   * Used to disable inputs and show loading state during API call
+   */
   const [isSubmitting, setIsSubmitting] = useState(false)
+
+  /**
+   * State: Submission result status
+   * Displays success or error message to user after form submission
+   */
   const [submitStatus, setSubmitStatus] = useState<{
     type: 'success' | 'error' | null
     message: string
   }>({ type: null, message: '' })
 
+  /**
+   * Form Submit Handler
+   *
+   * Handles the contact form submission process:
+   * 1. Prevents default form submission (no page reload)
+   * 2. Sets loading state and clears previous status messages
+   * 3. Sends email via EmailJS API
+   * 4. Shows success message and resets form on success
+   * 5. Shows error message on failure
+   * 6. Clears loading state in finally block
+   *
+   * @param e - Form submission event
+   */
   const handleSubmit = async (e: React.FormEvent) => {
+    // Prevent default form submission (would cause page reload)
     e.preventDefault()
+
+    // Set loading state - disables inputs and shows "Sending..." on button
     setIsSubmitting(true)
+
+    // Clear any previous success/error messages
     setSubmitStatus({ type: null, message: '' })
 
     try {
-      // Send email using EmailJS
+      /**
+       * Send email via EmailJS
+       *
+       * EmailJS handles:
+       * - Sending email from your configured service (Gmail, Outlook, etc.)
+       * - Template variable substitution
+       * - Rate limiting and spam prevention
+       * - Domain validation (if configured in EmailJS dashboard)
+       */
       await emailjs.send(
-        EMAILJS_SERVICE_ID,
-        EMAILJS_TEMPLATE_ID,
+        EMAILJS_SERVICE_ID,     // Which email service to use
+        EMAILJS_TEMPLATE_ID,    // Which email template to use
         {
-          from_name: formData.name,
-          from_email: formData.email,
-          message: formData.message,
-          to_name: 'Tan Le',
+          // Template variables (must match EmailJS template placeholders)
+          from_name: formData.name,        // Sender's name
+          from_email: formData.email,      // Sender's email (for replies)
+          message: formData.message,       // Message content
+          to_name: 'Tan Le',              // Recipient name (your name)
         },
-        EMAILJS_PUBLIC_KEY
+        EMAILJS_PUBLIC_KEY      // API authentication
       )
 
+      // Show success message to user
       setSubmitStatus({
         type: 'success',
         message: 'Thank you! Your message has been sent successfully.'
       })
 
-      // Reset form
+      // Clear form inputs after successful submission
       setFormData({
         name: '',
         email: '',
         message: ''
       })
     } catch (error) {
+      // Log error for debugging (visible in browser console)
       console.error('EmailJS Error:', error)
+
+      // Show user-friendly error message
       setSubmitStatus({
         type: 'error',
         message: 'Oops! Something went wrong. Please try again or email me directly.'
       })
     } finally {
+      // Always clear loading state, regardless of success or failure
       setIsSubmitting(false)
     }
   }
 
+  /**
+   * Input Change Handler
+   *
+   * Updates form data state when user types in any input field.
+   * Uses computed property name to update the correct field based
+   * on the input's 'name' attribute.
+   *
+   * @param e - Input change event
+   */
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData(prev => ({
       ...prev,
+      // Use input's name attribute to update the corresponding field
+      // e.g., name="email" updates formData.email
       [e.target.name]: e.target.value
     }))
   }

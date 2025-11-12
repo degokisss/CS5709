@@ -1,5 +1,29 @@
+/**
+ * About Section Component
+ *
+ * Displays information about the developer's background, experience,
+ * education, and technical expertise.
+ *
+ * Features:
+ * - Professional summary
+ * - Work experience highlights
+ * - Education background
+ * - Technical skills overview
+ * - Clean, readable layout
+ *
+ * @module components/layout/about
+ */
+
 import './About.css'
 
+/**
+ * About Component
+ *
+ * Renders the about section with developer biography and background.
+ * Content is static and provides overview of experience and skills.
+ *
+ * @returns About section element
+ */
 export default function About() {
   return (
     <section id="about" className="about-section">
